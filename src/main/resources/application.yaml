@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /demo
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@212.80.213.127:8523/DXCORA19C
+    username: DEMO
+    password: DEMO
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    show-sql: true
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+  main:
+    allow-circular-references: true
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: "NULL"
+demo:
+  config:
+    application-name: DXC-Demo
+
+
+
+

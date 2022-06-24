@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="templates/template.html :: app_header(~{::script},~{},~{})">
+	<script th:src="@{/pages/home/js/home.js}"></script>
+</head>
+
+<body th:replace="templates/template.html :: app_body(~{::div},|#{MATS.WMATS0001.Screen.Id}|,|#{MATS.WMATS0001.Screen.Desc}|)">
+	<div class="sixteen wide column row" style="width:100%;" id="screenContent">
+	</div>
+</body>
+
+</html>

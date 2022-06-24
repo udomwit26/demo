@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="app_header(scripts,links,styles)">
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <link rel="icon" type="image/ico" th:href="@{/images/logo.ico}" />
+    <title>[[#{MATS.Title}]]</title>
+
+    <script th:src="@{/scripts/jquery.min.js}"></script>
+    <script th:src="@{/scripts/semantic.min.js}"></script>
+    <script th:src="@{/scripts/jszip.min.js}"></script>
+    <script th:src="@{/scripts/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/scripts/dataTables.semanticui.min.js}"></script>
+    <script th:src="@{/scripts/dataTables.buttons.min.js}"></script>
+    <script th:src="@{/scripts/buttons.semanticui.min.js}"></script>
+    <script th:src="@{/scripts/buttons.html5.min.js}"></script>
+    <script th:src="@{/scripts/dataTables.fixedColumns.min.js}"></script>
+    <script th:src="@{/scripts/dataTables.fixedHeader.min.js}"></script>
+    <script th:src="@{/scripts/moment.min.js}"></script>
+    <script th:src="@{/scripts/datetime-moment.js}"></script>
+    <script th:src="@{/scripts/numeral.min.js}"></script>
+    <script th:src="@{/scripts/string.min.js}"></script>
+    <script th:src="@{/scripts/underscore.min.js}"></script>
+    <script th:src="@{/scripts/loadingoverlay.min.js}"></script>
+    <script th:src="@{/scripts/urlParamsExtraction.js}"></script>
+    <script th:src="@{/scripts/localDataStorage.min.js}"></script>
+    <!-- DXC Utils -->
+    <script th:src="@{/scripts/DXCUtils.js}"></script>
+    <!-- script for template -->
+    <script th:src="@{/scripts/template.js}"></script>
+    <!-- script for child -->
+    <th:block th:replace="${scripts}" />
+
+    <link th:href="@{/css/semantic.min.css}" rel='stylesheet' />
+    <link th:href="@{/css/dataTables.semanticui.min.css}" rel='stylesheet' />
+    <link th:href="@{/css/buttons.semanticui.min.css}" rel='stylesheet' />
+    <link th:href="@{/css/fixedColumns.semanticui.min.css}" rel='stylesheet' />
+    <link th:href="@{/css/fixedHeader.semanticui.min.css}" rel='stylesheet' />
+    <link th:href="@{/css/fontsize.css}" rel='stylesheet' />
+    <link th:href="@{/css/dxc_style.css}" rel='stylesheet' />
+
+    <th:block th:replace="${links}" />
+    <th:block th:replace="${styles}" />
+</head>
+
+<body th:fragment="app_body(content,screenId,screenDesc)">
+    <div class="ui inverted sidebar vertical menu" id="app_menu">
+        <div class="item" data-tagtype="menugroup">
+            <h3>[[#{MATS.SystemName}]]</h3>
+        </div>
+        <div id="MATS000" class="menu" data-tagtype="menugroup">
+            <a id="WMATS0001" class="item" data-tagtype="menuitem" data-auth="no" th:href="@{/pages/home}">
+                <span class="text">
+                    <i class="ui big home icon"></i>
+                </span>
+            </a>
+        </div>
+        <div id="MATS100" class="item" data-tagtype="menugroup" data-auth="no">
+            <a href="#" onclick="return DXCUtils.toggleGroupMenu(this)">
+                <span class="text">[[#{MATS.Menu.Group.Working}]]</span>
+            </a>
+            <div class="menu">
+                <a id="WMATS1111" class="item" data-tagtype="menuitem" data-auth="no" th:href="@{/pages/commondownload}">[[#{MATS.Menu.Group.Working.WMATS1111}]]</a>
+            </div>
+            <div class="menu">
+                <a id="WMATS1121" class="item" data-tagtype="menuitem" data-auth="no" th:href="@{/pages/commonupload}">[[#{MATS.Menu.Group.Working.WMATS1121}]]</a>
+            </div>
+            <div class="menu">
+                <a id="WMATS1131" class="item" data-tagtype="menuitem" data-auth="no" th:href="@{/pages/calculation}">[[#{MATS.Menu.Group.Working.WMATS1131}]]</a>
+            </div>
+        </div>
+        <div id="ST3MATS" class="item" data-tagtype="menugroup" data-auth="no">
+            <a href="#" onclick="return DXCUtils.toggleGroupMenu(this)">
+                <span class="text">[[#{MATS.Menu.Group.ST3}]]</span>
+            </a>
+            <div class="menu">
+                <a id="WST33060" class="item" data-tagtype="menuitem" data-auth="no" target="_new" href="/layout/systemMaster">[[#{MATS.Menu.Group.ST3.WST33060}]]</a>
+            </div>
+            <div class="menu">
+                <a id="WST33010" class="item" data-tagtype="menuitem" data-auth="no" target="_new" href="/layout/logMonitoring">[[#{MATS.Menu.Group.ST3.WST33010}]]</a>
+            </div>
+            <div class="menu">
+                <a id="WST33020" class="item" data-tagtype="menuitem" data-auth="no" target="_new" href="/layout/excelDownloadMonitoring">[[#{MATS.Menu.Group.ST3.WST33020}]]</a>
+            </div>
+        </div>
+    </div>
+    <div class="ui blue mini top fixed inverted borderless menu">
+        <div class="left item">
+            <div class="ui blue mini button" id="menucaller">
+                <i class="content icon"></i> [[#{MATS.Button.Menu}]]
+            </div>
+            <span class="screenid">[[${screenId}]]: [[${screenDesc}]]</span>
+            <input type="hidden" id="currentScreenId" th:value="${screenId}">
+        </div>
+        <div class="right item">
+            <div style="padding-left: 2rem; pointer-events: none;">
+                <i class="user icon"></i>
+                <span class="userinfo"></span>
+            </div>
+        </div>
+    </div>
+    <div class="ui blue mini bottom fixed inverted borderless menu">
+        <div class="left item">
+            <span></span>
+        </div>
+        <div class="center item">
+            <SPAN class="footer">[[#{MATS.Footer}]]</SPAN>
+        </div>
+        <div class="right item">
+            <SPAN class="time"></SPAN>
+        </div>
+    </div>
+    <div class="pusher">
+        <div class="ui fluid container" style="margin-top: 4rem; margin-bottom: 8rem; padding-left: 1rem; padding-right: 1rem;">
+            <div class="ui small modal" id="confirmingModal">
+                <div class="ui header">
+                    <span class="ui text">
+                    </span>
+                </div>
+                <div class="content">
+                </div>
+                <div class="actions">
+                    <div class="ui center floated positive button" id="modalButtonYes">
+                        <i class="checkmark icon"></i> [[#{MATS.Button.Yes}]]
+                    </div>
+                    <div class="ui center floated negative button" id="modalButtonNo">
+                        <i class="remove icon"></i> [[#{MATS.Button.No}]]
+                    </div>
+                </div>
+            </div>
+            <div class="ui small modal" id="alertModal">
+                <div class="ui header">
+                    <span class="ui text">
+                    </span>
+                </div>
+                <div class="content">
+                </div>
+                <div class="actions">
+                    <div class="ui center floated button" id="modalButtonOK">
+                        <i class="checkmark icon"></i> [[#{MATS.Button.OK}]]
+                    </div>
+                </div>
+            </div>
+            <div class="ui grid">
+                <th:block th:replace="${content}" />
+                <div class="ui clearing hidden divider row"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

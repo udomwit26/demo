@@ -1,0 +1,18 @@
+delete from TB_M_DROP_DOWN;
+Insert into TB_M_DROP_DOWN
+   (CATEGORIES, VAL_TEXT, LABEL_TEXT, PRIORITY_ORDER, ACTIVE_FLAG)
+ Values
+   ('PROVINCE', '03', 'Samut Prakarn', 3, 'Y');
+Insert into TB_M_DROP_DOWN
+   (CATEGORIES, VAL_TEXT, LABEL_TEXT, PRIORITY_ORDER, ACTIVE_FLAG)
+ Values
+   ('PROVINCE', '01', 'Krungthep', 1, 'Y');
+Insert into TB_M_DROP_DOWN
+   (CATEGORIES, VAL_TEXT, LABEL_TEXT, PRIORITY_ORDER, ACTIVE_FLAG)
+ Values
+   ('PROVINCE', '02', 'Nontaburi', 2, 'Y');
+Insert into TB_M_DROP_DOWN
+   (CATEGORIES, VAL_TEXT, LABEL_TEXT, PRIORITY_ORDER, ACTIVE_FLAG)
+ Values
+   ('PROVINCE', 'DEL_01', 'Bangkok', 1, 'N');
+COMMIT;
