@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.data.mybatis.mappers.DropdownMapper">
-    <select id="findAllProvinces" resultType="com.example.demo.data.mybatis.models.DropdownModel" parameterType="map">
-        SELECT *
-        FROM TB_M_DROP_DOWN
-        <where>
-            <if test="activeFlag!=null and activeFlag!=''">
-                ACTIVE_FLAG=#{activeFlag}
-            </if>
-        </where>
-        ORDER BY PRIORITY_ORDER
-    </select>
-
-    <select id="findByProvinces" resultType="com.example.demo.data.mybatis.models.DropdownModel" parameterType="map">
-        SELECT *
-        FROM TB_M_DROP_DOWN
-        <where>
-            <if test="valText!=null and valText!=''">
-                VAL_TEXT=#{valText}
-            </if>
-        </where>
-        ORDER BY PRIORITY_ORDER
-    </select>
+<mapper namespace="com.example.demo.data.mybatis.mappers.GimMasterMapper">
+    <insert id="insertGimHeader" parameterType="com.example.demo.data.mybatis.models.GimHeaderModel">
+        INSERT INTO TB_M_GIM_H (GIM_TYPE,
+        GIM_DESC,
+        CD_LENGTH,
+        FIELD1_LABEL,
+        FIELD2_LABEL,
+        FIELD3_LABEL,
+        ACTIVE_FLAG,
+        CREATED_BY,
+        CREATED_DT,
+        MODIFIED_BY,
+        MODIFIED_DT)
+        VALUES (UPPER ( #{gimType}),
+        #{gimDesc},
+        #{cdLength},
+        #{field1Label},
+        #{field2Label},
+        #{field3Label},
+        #{activeFlag},
+        #{createdBy},
+        SYSDATE,
+        #{modifiedBy},
+        SYSDATE)
+    </insert>
 </mapper>

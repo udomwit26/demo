@@ -7,7 +7,6 @@ import java.util.Date;
 @Data
 public class GimHeaderModel {
     private String gimType;
-    private String gimCd;
     private String gimDesc;
     private Integer cdLength;
     private String field1Label;
@@ -18,4 +17,6 @@ public class GimHeaderModel {
     private Date createdDt;
     private String modifiedBy;
     private Date modifiedDt;
+
+
 }

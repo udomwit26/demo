@@ -62,14 +62,39 @@ class ProvinceDropdownControllerTest {
     @Sql(value = "ProvinceDropdownControllerTest/data_after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void testCase3() {
         ResponseEntity<List> response = restTemplate.exchange("/dropdown/active/provinces", HttpMethod.GET, null, List.class);
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
+
         ObjectMapper mapper = new ObjectMapper();
-        List<DropdownDTO> allProvinceList = mapper.convertValue(response.getBody(), new TypeReference<List<DropdownDTO>>() {
-        });
-        assertEquals(3, allProvinceList.size());
-        assertEquals("Krungthep",allProvinceList.get(0).getText());
-        assertEquals("Nontaburi",allProvinceList.get(1).getText());
-        assertEquals("Samut Prakarn",allProvinceList.get(2).getText());
+        List<DropdownDTO> provinceList = mapper.convertValue(response.getBody(), new TypeReference<List<DropdownDTO>>() {});
+
+        assertEquals(3, provinceList.size());
+        assertEquals("Krungthep",provinceList.get(0).getText());
+        assertEquals("Nontaburi",provinceList.get(1).getText());
+        assertEquals("Samut Prakarn",provinceList.get(2).getText());
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("Test Case 4: Find all active Provinces and check order")
+    @Sql(value = "ProvinceDropdownControllerTest/data_before.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "ProvinceDropdownControllerTest/data_after.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    void testCase4() {
+        ResponseEntity<List> response = restTemplate.exchange("/dropdown/active/provinces2", HttpMethod.GET, null, List.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<DropdownDTO> provinceList = mapper.convertValue(response.getBody(), new TypeReference<List<DropdownDTO>>() {});
+
+        assertEquals(1, provinceList.size());
+        /*
+        assertEquals("Krungthep",provinceList.get(0).getText());
+        assertEquals("Nontaburi",provinceList.get(1).getText());
+        assertEquals("Samut Prakarn",provinceList.get(2).getText());
+
+         */
     }
 }

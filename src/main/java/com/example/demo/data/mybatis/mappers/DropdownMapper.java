@@ -8,5 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface DropdownMapper {
+
+    List<DropdownModel> findByProvinces(@Param("valText") final String valText);
     List<DropdownModel> findAllProvinces(@Param("activeFlag") final String activeFlag);
 }

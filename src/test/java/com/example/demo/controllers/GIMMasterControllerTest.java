@@ -1,55 +1,23 @@
-package com.dxc.application.controllers;
+package com.example.demo.controllers;
 
-import com.dxc.application.constants.AppConstants;
-import com.dxc.application.feature.gimmaster.data.database.model.GimHeader;
-import com.dxc.application.model.Combo;
-import com.dxc.application.model.GimHeader;
-import com.dxc.application.model.RestJsonData;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
-import org.json.JSONObject;
+
+import com.example.demo.dto.GimHeaderDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-
-import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@SqlConfig(dataSource = "myBatisDataSource",transactionManager = "mybastistx")
 class GIMMasterControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @SneakyThrows
-    @Test
-    @DisplayName("Test search gim header with search criteria gim type")
-    @Sql(value = {"/testdata/GimMasterControllerTest/testGimMaster.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    void testSearchGimMasterWithSearchGimType() {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        GimHeader gimCriteria = new GimHeader();
-        gimCriteria.setSearchGimTypes(new String[]{"TEST_GIM"});
-        HttpEntity<GimHeader> requestEntity = new HttpEntity<>(gimCriteria, headers);
-
-        ResponseEntity<RestJsonData> response = restTemplate.postForEntity("/gimmaster/gimheader",requestEntity,RestJsonData.class);
-
-        ObjectMapper mapper = new ObjectMapper();
-        List<GimHeader> gimHeaders = mapper.convertValue(response.getBody().getData(),new TypeReference<List<GimHeader>>(){});
-        assertEquals(1,gimHeaders.size());
-        assertTrue(gimHeaders.stream().anyMatch(item -> "TEST_GIM".equals(item.getGimType())));
-    }
 
     @Test
     @DisplayName("Test add gim header ")
@@ -59,25 +27,34 @@ class GIMMasterControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        GimHeader gimCriteria = new GimHeader();
-        gimCriteria.setGimType("TONG");
-        gimCriteria.setGimDesc("Test add Tong");
-        gimCriteria.setActiveFlag("Y");
-        gimCriteria.setCdLength(new BigDecimal(5));
-        gimCriteria.setField1Label("xxx");
-        gimCriteria.setField2Label("xxx");
-        gimCriteria.setField3Label("xxx");
-        gimCriteria.setMode(AppConstants.MODE_ADD);
+        GimHeaderDTO gimHeaderDTO = new GimHeaderDTO();
+        gimHeaderDTO.setGimType("TONG1");
+        gimHeaderDTO.setGimDesc("Test add Tong");
+        gimHeaderDTO.setActiveFlag("Y");
+        gimHeaderDTO.setCdLength(5);
+        gimHeaderDTO.setField1Label("xxx");
+        gimHeaderDTO.setField2Label("xxx");
+        gimHeaderDTO.setField3Label("xxx");
+        gimHeaderDTO.setCreatedBy("tong");
+        //gimHeaderDTO.setModifiedBy("tong");
 
-        HttpEntity<GimHeader> requestEntity = new HttpEntity<>(gimCriteria, headers);
+        GimHeaderDTO gimHeaderDTO2 = new GimHeaderDTO();
+        gimHeaderDTO2.setGimType("TONG2");
+        gimHeaderDTO2.setGimDesc("Test add Tong");
+        gimHeaderDTO2.setActiveFlag("Y");
+        gimHeaderDTO2.setCdLength(5);
+        gimHeaderDTO2.setField1Label("xxx");
+        gimHeaderDTO2.setField2Label("xxx");
+        gimHeaderDTO2.setField3Label("xxx");
+        gimHeaderDTO2.setCreatedBy("tong");
+        //gimHeaderDTO2.setModifiedBy("tong");
 
-        ResponseEntity<RestJsonData> response = restTemplate.exchange("/gimmaster/gimheader", HttpMethod.PUT,requestEntity,RestJsonData.class);
-        //ResponseEntity<RestJsonData> response = restTemplate.put("/gimmaster/gimheader",requestEntity,RestJsonData.class);
+        List<GimHeaderDTO>  gimHeaders = Arrays.asList(gimHeaderDTO,gimHeaderDTO2);
 
-        ObjectMapper mapper = new ObjectMapper();
-        BigDecimal rowInsert = mapper.convertValue(response.getBody().getRowCount(),new TypeReference<BigDecimal>(){});
-        assertEquals(1,rowInsert.intValue());
-        //assertTrue(gimHeaders.stream().anyMatch(item -> "TEST_GIM".equals(item.getGimType())));
+        HttpEntity<List<GimHeaderDTO>> requestEntity = new HttpEntity<>(gimHeaders, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange("/gimheader", HttpMethod.PUT,requestEntity,String.class);
+        assertEquals("ERR",response.getBody());
     }
 
 }

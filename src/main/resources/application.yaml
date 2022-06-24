@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:oracle:thin:@212.80.213.127:8523/DXCORA19C
-    username: DEMO
-    password: DEMO
+    username: TONG
+    password: TONG
     hikari:
       maximum-pool-size: 5
       minimum-idle: 2

@@ -7,5 +7,6 @@ import java.util.List;
 
 @Mapper
 public interface GimMasterMapper {
-    List<GimHeaderModel> findAllGimHeaders();
+
+    void insertGimHeader(GimHeaderModel model);
 }

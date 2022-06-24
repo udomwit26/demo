@@ -11,4 +11,15 @@
         </where>
         ORDER BY PRIORITY_ORDER
     </select>
+
+    <select id="findByProvinces" resultType="com.example.demo.data.mybatis.models.DropdownModel" parameterType="map">
+        SELECT *
+        FROM TB_M_DROP_DOWN
+        <where>
+            <if test="valText!=null and valText!=''">
+                VAL_TEXT=#{valText}
+            </if>
+        </where>
+        ORDER BY PRIORITY_ORDER
+    </select>
 </mapper>

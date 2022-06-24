@@ -1,36 +1,54 @@
 package com.example.demo.controllers;
 
-import com.example.demo.data.mybatis.models.DropdownModel;
-import com.example.demo.dto.DropdownDTO;
-import com.example.demo.service.DropdownService;
+import com.example.demo.data.mybatis.models.GimHeaderModel;
+import com.example.demo.dto.GimHeaderDTO;
+import com.example.demo.service.Gimmasterervice;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import java.util.ArrayList;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
-public class ProvinceDropdownController {
-    private final DropdownService dropdownService;
+public class GimMasterController {
 
-    @GetMapping("/dropdown/provinces")
-    public List<DropdownDTO> getAllProvinces() {
-        return dropdownService.getAllProvinces().stream().map(this::convertDropdownModelToDTO).collect(Collectors.toList());
-    }
-    @GetMapping("/dropdown/active/provinces")
-    public List<DropdownDTO> getAllActiveProvinces() {
-        return dropdownService.getAllActiveProvinces("Y").stream().map(this::convertDropdownModelToDTO).collect(Collectors.toList());
+    private final ModelMapper modelMapper;
+    private final Gimmasterervice gimmasterervice;
+
+    @PutMapping(value = "/gimheader", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String addGimHeader(@RequestBody final List<GimHeaderDTO> input, HttpServletRequest request) {
+
+        //ModelMapper modelMapper = new ModelMapper();
+
+
+        if (input == null) return "NERR";
+
+        if (modelMapper == null) return "MERR";
+
+        input.stream().forEach(e -> System.out.println("data :" + e.getGimDesc()));
+
+
+        List<GimHeaderModel> gimDtos = input.stream().map(e->modelMapper.map(e,GimHeaderModel.class)).collect(Collectors.toList());
+
+
+        gimDtos.stream().forEach(e->System.out.println("data :" +e.getGimDesc()));
+
+        //try{
+            gimDtos.stream().forEach(e->gimmasterervice.addlGimHeaders(e));
+       // }catch (Exception ex){
+       //     return "ERR";
+        //}
+
+        return "INF";
+
     }
 
-    @GetMapping("/dropdown/active/provinces2")
-    public List<DropdownDTO> getProvinces() {
-        return dropdownService.findByProvinces("03").stream().map(this::convertDropdownModelToDTO).collect(Collectors.toList());
-    }
-
-    private DropdownDTO convertDropdownModelToDTO(DropdownModel model){
-        return new DropdownDTO(model.getValText(), model.getLabelText());
-    }
 }
