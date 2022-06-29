@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="templates/template.html :: app_header(~{::script},~{},~{})">
+	<script th:src="@{/pages/js/login.js}"></script>
+</head>
+
+<body th:replace="templates/template.html :: app_body(~{::div},|#{MATS.WMATS0000.Screen.Id}|,|#{MATS.WMATS0000.Screen.Desc}|)">
+	<div class="sixteen wide column row" style="width:100%;" id="screenContent">
+		<div class="sixteen wide column row">
+			<form class="ui form" id="loginForm">
+				<div class="fields">
+					<div class="three wide field">
+						<label>User Name</label>
+						<input type="text" id="userName" >
+					</div>
+				</div>
+				<div class="fields">
+					<div class="three wide field">
+						<label>Password</label>
+						<input type="password" id="passWord" >
+					</div>
+				</div>
+				<button class="ui button" type="button" id="login">Login</button>
+			</form>
+
+		</div>
+	</div>
+</body>
+
+</html>

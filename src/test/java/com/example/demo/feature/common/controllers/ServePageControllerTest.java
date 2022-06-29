@@ -46,7 +46,38 @@ class ServePageControllerTest {
     @SneakyThrows
     void testCase2() {
 
-        ResponseEntity<String> response = restTemplate.exchange("/pages/home/js/home.js", HttpMethod.GET, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange("/pages/js/home.js", HttpMethod.GET, null, String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(StringUtils.endsWith(response.getBody(),"//]]>"));
+
+    }
+
+    @Test
+    @DisplayName("Test Case 3: Test load HTML of login screen success")
+    @SneakyThrows
+    void testCase3() {
+
+        ResponseEntity<String> response = restTemplate.exchange("/pages/login", HttpMethod.GET, null, String.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(StringUtils.endsWith(response.getBody(),"</html>"));
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        String html = mapper.convertValue(response.getBody(), new TypeReference<String>() {});
+        log.info("html:{}",html);
+
+    }
+
+    @Test
+    @DisplayName("Test Case 4: Test load JS of login screen success")
+    @SneakyThrows
+    void testCase4() {
+
+        ResponseEntity<String> response = restTemplate.exchange("/pages/js/login.js", HttpMethod.GET, null, String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
